@@ -1,0 +1,13 @@
+version: '2'
+services:
+        raspberrypi3-keras:
+                build:
+                        context: .
+                ports:
+                        - "5000:5000"
+                privileged: true
+                devices:
+                        - "/dev/vchiq"
+                volumes:
+                        - .:/code
+                mem_limit: 10000000000000
