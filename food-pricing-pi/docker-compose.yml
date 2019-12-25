@@ -1,0 +1,14 @@
+version: '2'
+services:
+        food-pricing-server:
+                build:
+                        context: .
+                ports:
+                        - "5000:5000"
+                privileged: true
+                devices:
+                        - "/dev/vchiq"
+                          #      - "/dev/vcsm"
+                volumes:
+                        - .:/code
+                mem_limit: 10000000000000
