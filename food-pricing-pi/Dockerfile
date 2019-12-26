@@ -1,6 +1,6 @@
-FROM mertcanboz/raspberrypi3-keras:2.0.0-buster
+FROM mertcanboz/raspberrypi3-keras:latest
 
 WORKDIR /app
 COPY . /app
 EXPOSE 5000
-CMD python3 ./app.py
+CMD pip list | grep Keras && pip list | grep ensorflow && python3 ./server.py
