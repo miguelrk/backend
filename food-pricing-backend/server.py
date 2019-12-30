@@ -37,7 +37,7 @@ def predict():
     with picamera.PiCamera() as camera:
         camera.resolution = (1024,768)
         camera.start_preview()
-        time.sleep(3)
+        time.sleep(1)
         img = camera.capture(image_path)
 #       print("photo taken")
 #       return send_file('image.jpg', mimetype='image/jpg')
