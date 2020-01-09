@@ -6,6 +6,7 @@ import time
 
 import numpy as np
 import os
+
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import imagenet_utils
@@ -13,6 +14,7 @@ from tensorflow.keras.applications import imagenet_utils
 app = Flask(__name__)
 
 model = load_model("model.hdf5")
+print("model loaded.")
 
 # feature enginnering
 def create_features(dataset):
@@ -33,12 +35,13 @@ def nicki():
 @app.route('/predict')
 def predict():
     image_path = 'image.jpg'
+    print("taking photo")
     with picamera.PiCamera() as camera:
         camera.resolution = (1024,768)
-        camera.start_preview()
+        #camera.start_preview()
         time.sleep(1)
         img = camera.capture(image_path)
-#       print("photo taken")
+    print("photo taken")
 #       return send_file('image.jpg', mimetype='image/jpg')
 
 # # loding the ml model 
@@ -47,7 +50,6 @@ def predict():
 
     picture_features = create_features(picture_image)
 #    print("features created~")
-
     prediction = model.predict(picture_features)
     return "Predicted Class is: {}".format(categories[np.argmax(prediction)]), send_file('image.jpg', mimetype='image/jpg')
 
