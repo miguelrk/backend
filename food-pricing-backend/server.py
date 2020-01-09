@@ -6,7 +6,6 @@ import time
 
 import numpy as np
 import os
-#import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import imagenet_utils
@@ -48,12 +47,9 @@ def predict():
 
     picture_features = create_features(picture_image)
 #    print("features created~")
-#    image = load_img(picture_image[0], target_size=(224, 224))
-    #plt.imshow(image)
-    #plt.axis("off")
-    #plt.show()
+
     prediction = model.predict(picture_features)
-    return "Predicted Class is: {}".format(categories[np.argmax(prediction)])
+    return "Predicted Class is: {}".format(categories[np.argmax(prediction)]), send_file('image.jpg', mimetype='image/jpg')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=False)
