@@ -5,11 +5,12 @@
   <!-- CSS -->
   <!-- STYLESHEETS -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
 
   <!-- VENDOR SCRIPTS -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
   <title>Price My Food</title>
 </head>
@@ -30,16 +31,15 @@
   <div class="row">
     <form style="clear: both" class="prediction-form form-horizontal" id="predictionForm">
       <div class="form-group col-sm-4">
-        <label for="title">Hmmm:</label>
-        <input type="text" class="form-control" id="prediction" name="prediction"/>
+        <label for="title">Prediction is: </label>
+	<label id="prediction" name="prediction"></label>
       </div>
       <div class="form-group col-sm-12" style="text-align: center;">
-        <input type="submit" class="btn btn-info" value="Submit"/>
+	      <button type="button" id="buttonPredict" class="btn btn-info">Predict</button>
       </div>
+      <img id="foodImage" width="300" height="300"></img>
     </form>
   </div>
 </div>
-  <button id="buttonPredict">Click me !</button> 
-<script src="scripts/app.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 # TUTORIAL: https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
 
 import picamera
-from flask import Flask, send_file
+from flask import Flask, send_file, render_template, jsonify
 import time
 
 import numpy as np
@@ -30,7 +30,7 @@ def create_features(dataset):
 
 @app.route('/')
 def nicki():
-    return 'Hello!'
+    return render_template("index.html")
 
 @app.route('/predict')
 def predict():
@@ -51,8 +51,14 @@ def predict():
     picture_features = create_features(picture_image)
 #    print("features created~")
     prediction = model.predict(picture_features)
-    return "Predicted Class is: {}".format(categories[np.argmax(prediction)])
+    response = "{}".format(categories[np.argmax(prediction)])
+    return jsonify({"prediction": response})
     #return send_file('image.jpg', mimetype='image/jpg')
+
+@app.route('/getImage')
+def getImage():
+    os.rename("image.jpg", "static/image.jpg")
+    return "/static/image.jpg"#send_file('image.jpg', mimetype='image/jpg')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=False)
