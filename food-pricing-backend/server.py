@@ -51,7 +51,8 @@ def predict():
     picture_features = create_features(picture_image)
 #    print("features created~")
     prediction = model.predict(picture_features)
-    return "Predicted Class is: {}".format(categories[np.argmax(prediction)]), send_file('image.jpg', mimetype='image/jpg')
+    return "Predicted Class is: {}".format(categories[np.argmax(prediction)])
+    #return send_file('image.jpg', mimetype='image/jpg')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=False)
