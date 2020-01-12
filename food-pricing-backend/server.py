@@ -1,24 +1,21 @@
 # TUTORIAL: https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
 
 import picamera
-from flask import Flask, send_file
 import time
 import pyrebase
 import uuid
 import glob
-
 import numpy as np
 import os
-#import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import imagenet_utils
+from flask import Flask, send_file
 
 app = Flask(__name__)
 
 model = load_model("model.hdf5")
 path = '/home/pi/backend/food-pricing-backend/data/*.jpg'
-id = str(uuid.uuid4())
 jpg = '.jpg'
 
 config = {
@@ -50,7 +47,7 @@ def nicki():
 
 @app.route('/predict')
 def predict():
-    # image_path = 'image.jpg'
+    id = str(uuid.uuid4())
     with picamera.PiCamera() as camera:
         camera.resolution = (1024,768)
         camera.start_preview()
@@ -58,12 +55,11 @@ def predict():
         camera.capture('/home/pi/backend/food-pricing-backend/data/%s%s' %(id,jpg) )
 
         storage.child("/predictions/%s%s" %(id,jpg)).put("/home/pi/backend/food-pricing-backend/data/*.jpg")
-        # img = camera.capture(image_path)        
-
 
 # # loding the ml model 
     categories = ['Bread','Dairy product','Dessert','Egg','Fried food','Meat','Noodles/Pasta','Rice','Seafood', 'Soup', 'Vegetable/Fruit']
     picture_image = glob.glob(path)
+    os.remove("/home/pi/backend/food-pricing-backend/data/%s%s" %(id,jpg) )
 
     picture_features = create_features(picture_image)
 
