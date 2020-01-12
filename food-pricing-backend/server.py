@@ -45,7 +45,7 @@ def create_features(dataset):
 def nicki():
     return 'Hello!'
 
-@app.route('/predict')
+@app.route('/predict', methods=['GET'])
 def predict():
     id = str(uuid.uuid4())
     with picamera.PiCamera() as camera:
