@@ -59,11 +59,11 @@ def predict():
 # # loding the ml model 
     categories = ['Bread','Dairy product','Dessert','Egg','Fried food','Meat','Noodles/Pasta','Rice','Seafood', 'Soup', 'Vegetable/Fruit']
     picture_image = glob.glob(path)
-    os.remove("/home/pi/backend/food-pricing-backend/data/%s%s" %(id,jpg) )
-
+    
     picture_features = create_features(picture_image)
 
     prediction = model.predict(picture_features)
+    os.remove("/home/pi/backend/food-pricing-backend/data/%s%s" %(id,jpg) )
     return "Predicted Class is: {}".format(categories[np.argmax(prediction)])
 
 if __name__ == '__main__':
