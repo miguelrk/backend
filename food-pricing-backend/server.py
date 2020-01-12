@@ -1,5 +1,3 @@
-# TUTORIAL: https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
-
 import picamera
 import time
 import pyrebase
@@ -11,6 +9,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import imagenet_utils
 from flask import Flask, send_file
+from pyrebase_utils import db
 
 app = Flask(__name__)
 
@@ -42,7 +41,7 @@ def create_features(dataset):
      return x
 
 @app.route('/')
-def nicki():
+def mainRoute():
     return 'Hello!'
 
 @app.route('/predict')
