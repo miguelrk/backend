@@ -1,12 +1,15 @@
 # TUTORIAL: https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
 
 import picamera
-from flask import Flask, send_file, render_template, jsonify
+from flask import Flask, send_file
 import time
+import pyrebase
+import uuid
+import glob
 
 import numpy as np
 import os
-
+#import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import imagenet_utils
@@ -14,7 +17,20 @@ from tensorflow.keras.applications import imagenet_utils
 app = Flask(__name__)
 
 model = load_model("model.hdf5")
-print("model loaded.")
+path = '/home/pi/backend/food-pricing-backend/data/*.jpg'
+id = str(uuid.uuid4())
+jpg = '.jpg'
+
+config = {
+    'apiKey': 'AIzaSyCCL8LNWfr2Ri2wSOV8rjlbxZ4S1SWRWco',
+    'authDomain': 'tum-food-app.firebaseapp.com',
+    'databaseURL': 'https://tum-food-app.firebaseio.com',
+    'storageBucket': 'tum-food-app.appspot.com'
+}
+
+firebase = pyrebase.initialize_app(config)
+storage = firebase.storage()
+
 
 # feature enginnering
 def create_features(dataset):
@@ -30,35 +46,29 @@ def create_features(dataset):
 
 @app.route('/')
 def nicki():
-    return render_template("index.html")
+    return 'Hello!'
 
 @app.route('/predict')
 def predict():
-    image_path = 'image.jpg'
-    print("taking photo")
+    # image_path = 'image.jpg'
     with picamera.PiCamera() as camera:
         camera.resolution = (1024,768)
-        #camera.start_preview()
+        camera.start_preview()
         time.sleep(1)
-        img = camera.capture(image_path)
-    print("photo taken")
-#       return send_file('image.jpg', mimetype='image/jpg')
+        camera.capture('/home/pi/backend/food-pricing-backend/data/%s%s' %(id,jpg) )
+
+        storage.child("/predictions/%s%s" %(id,jpg)).put("/home/pi/backend/food-pricing-backend/data/*.jpg")
+        # img = camera.capture(image_path)        
+
 
 # # loding the ml model 
     categories = ['Bread','Dairy product','Dessert','Egg','Fried food','Meat','Noodles/Pasta','Rice','Seafood', 'Soup', 'Vegetable/Fruit']
-    picture_image = [image_path]
+    picture_image = glob.glob(path)
 
     picture_features = create_features(picture_image)
-#    print("features created~")
-    prediction = model.predict(picture_features)
-    response = "{}".format(categories[np.argmax(prediction)])
-    return jsonify({"prediction": response})
-    #return send_file('image.jpg', mimetype='image/jpg')
 
-@app.route('/getImage')
-def getImage():
-    os.rename("image.jpg", "static/image.jpg")
-    return "/static/image.jpg"#send_file('image.jpg', mimetype='image/jpg')
+    prediction = model.predict(picture_features)
+    return "Predicted Class is: {}".format(categories[np.argmax(prediction)])
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=False)
