@@ -1,3 +1,5 @@
+# TUTORIAL: https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
+
 import picamera
 import time
 import pyrebase
@@ -14,6 +16,7 @@ from pyrebase_utils import db
 app = Flask(__name__)
 
 model = load_model("model.hdf5")
+dirpathSecrets = os.getcwd() + "/firebase_secrets.json"
 path = '/home/pi/backend/food-pricing-backend/data/*.jpg'
 jpg = '.jpg'
 
@@ -22,10 +25,12 @@ config = {
     'authDomain': 'tum-food-app.firebaseapp.com',
     'databaseURL': 'https://tum-food-app.firebaseio.com',
     'storageBucket': 'tum-food-app.appspot.com'
+    'serviceAccount': dirpathSecrets
 }
 
 firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
+db = firebase.database()
 
 
 # feature enginnering
