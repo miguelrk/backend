@@ -77,7 +77,7 @@ def predict():
 ## line 78 might return an error also due to syntax error, but this is more a python syntax issue.
 
     label = categories[np.argmax(prediction)
-    data = {"id": "%s%s" %(id.jpg), "label": "%s" %(label), "": "wieght": "10", "price": "20", "iscorrect": "false"}
+    data = {"id": "%s%s" %(id.jpg), "label": "%s" %(label), "weight": "10", "price": "20", "iscorrect": "false"}
     db.child("/predictions").push(data)
     
 ## for debugging perpose. comment out line 79 ~ 81 and activate line 84 and 85 to check if pyrebase for database works properly or not.
