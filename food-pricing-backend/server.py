@@ -11,7 +11,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import imagenet_utils
 from flask import Flask, send_file
-from pyrebase_utils import db # If an error occurs in this line, delete it
+from pyrebase_utils import db # If an error occurs in this line, delete it.
 
 app = Flask(__name__)
 
@@ -24,7 +24,7 @@ config = {
     'apiKey': 'AIzaSyCCL8LNWfr2Ri2wSOV8rjlbxZ4S1SWRWco',
     'authDomain': 'tum-food-app.firebaseapp.com',
     'databaseURL': 'https://tum-food-app.firebaseio.com',
-    'storageBucket': 'tum-food-app.appspot.com'
+    'storageBucket': 'tum-food-app.appspot.com',
     'serviceAccount': dirpathSecrets
 }
 
