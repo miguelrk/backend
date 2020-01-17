@@ -7,11 +7,12 @@ import uuid
 import glob
 import numpy as np
 import os
+import json
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import imagenet_utils
 from flask import Flask, send_file
-from pyrebase_utils import db # If an error occurs in this line, delete it.
+#from pyrebase_utils import db # If an error occurs in this line, delete it.
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ model = load_model("model.hdf5")
 dirpathSecrets = os.getcwd() + "/firebase_secrets.json"
 path = '/home/pi/backend/food-pricing-backend/data/*.jpg'
 jpg = '.jpg'
-
+imgpath = "/home/pi/backend/food-pricing-backend/data/"
 config = {
     'apiKey': 'AIzaSyCCL8LNWfr2Ri2wSOV8rjlbxZ4S1SWRWco',
     'authDomain': 'tum-food-app.firebaseapp.com',
@@ -56,9 +57,9 @@ def predict():
         camera.resolution = (1024,768)
         camera.start_preview()
         time.sleep(1)
-        camera.capture('/home/pi/backend/food-pricing-backend/data/%s%s' %(id,jpg) )
+        camera.capture('%s%s%s' %(imgpath,id,jpg) ) 
 
-        storage.child("/predictions/%s%s" %(id,jpg)).put("/home/pi/backend/food-pricing-backend/data/*.jpg")
+        storage.child("/predictions/%s%s" %(id,jpg)).put("%s%s%s" %(imgpath, id, jpg))
 
 # # loding the ml model 
     categories = ['Bread','Dairy product','Dessert','Egg','Fried food','Meat','Noodles/Pasta','Rice','Seafood', 'Soup', 'Vegetable/Fruit']
@@ -76,9 +77,14 @@ def predict():
 
 ## line 78 might return an error also due to syntax error, but this is more a python syntax issue.
 
-    label = categories[np.argmax(prediction)
-    data = {"id": "%s%s" %(id.jpg), "label": "%s" %(label), "wieght": "10", "price": "20", "iscorrect": "false"}
-    db.child("/predictions").push(data)
+    
+    print(prediction)
+    print(np.argmax(prediction))
+    print(len(categories))
+    label = categories[np.argmax(prediction)]
+    data = {"id": id+jpg, "label": label, "weight": "10", "price": "20", "iscorrect": "false"}
+    print(json.dumps(data))
+    db.child("/predictions").push(json.dumps(data))
     
 ## for debugging perpose. comment out line 79 ~ 81 and activate line 84 and 85 to check if pyrebase for database works properly or not.
 ## documents in (https://github.com/thisbejim/Pyrebase)
@@ -90,3 +96,5 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=False)
+
+
