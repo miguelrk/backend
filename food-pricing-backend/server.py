@@ -1,5 +1,3 @@
-# TUTORIAL: https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
-
 import picamera
 import time
 import pyrebase
@@ -11,7 +9,7 @@ import json
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import imagenet_utils
-from flask import Flask, send_file
+from flask import Flask, Response #send_file
 #from pyrebase_utils import db # If an error occurs in this line, delete it.
 
 app = Flask(__name__)
@@ -21,6 +19,7 @@ dirpathSecrets = os.getcwd() + "/firebase_secrets.json"
 path = '/home/pi/backend/food-pricing-backend/data/*.jpg'
 jpg = '.jpg'
 imgpath = "/home/pi/backend/food-pricing-backend/data/"
+
 config = {
     'apiKey': 'AIzaSyCCL8LNWfr2Ri2wSOV8rjlbxZ4S1SWRWco',
     'authDomain': 'tum-food-app.firebaseapp.com',
@@ -83,6 +82,17 @@ def predict():
     db.child("/predictions").push(json.dumps(data))
                        
     return "Predicted Class is: {}".format(categories[np.argmax(prediction)])
+####### camera stream part
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+               
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=False)
