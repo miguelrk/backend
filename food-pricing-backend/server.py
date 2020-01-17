@@ -76,21 +76,11 @@ def predict():
 ## the alternative is to use another library (python-firebase) which @tech-ken don't know if it works properly or not due to that never used it before.
 
 ## line 78 might return an error also due to syntax error, but this is more a python syntax issue.
+## documents in (https://github.com/thisbejim/Pyrebase)
 
-    
-    print(prediction)
-    print(np.argmax(prediction))
-    print(len(categories))
     label = categories[np.argmax(prediction)]
     data = {"id": id+jpg, "label": label, "weight": "10", "price": "20", "iscorrect": "false"}
-    print(json.dumps(data))
     db.child("/predictions").push(json.dumps(data))
-    
-## for debugging perpose. comment out line 79 ~ 81 and activate line 84 and 85 to check if pyrebase for database works properly or not.
-## documents in (https://github.com/thisbejim/Pyrebase)
-                       
-#     fake = {"id": "a", "label": "b"}
-#     db.child("/predictions").push(fake)
                        
     return "Predicted Class is: {}".format(categories[np.argmax(prediction)])
 
