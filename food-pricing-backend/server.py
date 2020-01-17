@@ -12,6 +12,8 @@ from tensorflow.keras.applications import imagenet_utils
 from flask import Flask, Response #send_file
 #from pyrebase_utils import db # If an error occurs in this line, delete it.
 
+from camera import Camera
+
 app = Flask(__name__)
 
 model = load_model("model.hdf5")
