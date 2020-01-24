@@ -1,4 +1,3 @@
-from google.cloud import firestore
 import pyrebase
 import os
 
@@ -16,6 +15,7 @@ firebaseConfig = {
   "serviceAccount": dirpathSecrets
 }
 
+#not used
 firestoreConfig = {
   "type": "service_account",
   "project_id": "tum-food-app",
@@ -32,5 +32,5 @@ firestoreConfig = {
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 
-db = firestore.Client(firestoreConfig)
+db = firebase.database()
 storage = firebase.storage()

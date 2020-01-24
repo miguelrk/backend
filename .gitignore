@@ -1,2 +1,5 @@
 *.hdf5
 *.whl
+*.jpg
+*.data*
+*.index
