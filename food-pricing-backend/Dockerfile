@@ -1,6 +1,6 @@
 FROM mertcanboz/raspberrypi3-keras:latest
 
-RUN pip install pyrebase scikit-image flask-cors google-cloud-firestore
+RUN pip install pyrebase scikit-image flask-cors
 
 WORKDIR /app
 COPY . /app
