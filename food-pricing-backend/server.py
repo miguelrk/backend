@@ -9,6 +9,7 @@ import json
 from flask import Flask, Response#, send_file
 from visionModel import predict
 from pyrebase_utils import storage # If an error occurs in this line, delete it.
+from camera import BaseCamera
 
 app = Flask(__name__)
 CORS(app)
