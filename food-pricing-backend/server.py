@@ -6,7 +6,7 @@ import uuid
 import numpy as np
 import os
 import json
-from flask import Flask#, send_file
+from flask import Flask, Response#, send_file
 from visionModel import predict
 from pyrebase_utils import storage # If an error occurs in this line, delete it.
 
