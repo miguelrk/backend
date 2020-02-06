@@ -18,6 +18,7 @@ path = '/home/pi/backend/food-pricing-backend/data/*.jpg'
 jpg = '.jpg'
 imgpath = "/home/pi/backend/food-pricing-backend/"
 
+"""
 EMULATE_HX711=False
 referenceUnit = 1
 if not EMULATE_HX711:
@@ -36,7 +37,7 @@ hx.set_reading_format("MSB", "MSB")
 hx.set_reference_unit(referenceUnit)
 hx.reset()
 hx.tare()
-
+"""
 @app.route('/')
 def mainRoute():
     return 'Hello!'
@@ -72,7 +73,7 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(Camera()),
+    return Response(gen(BaseCamera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':

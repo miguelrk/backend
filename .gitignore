@@ -3,3 +3,5 @@
 *.jpg
 *.data*
 *.index
+food-pricing-backend/__pycache__/
+food-pricing-backend/netty/__pycache__/
