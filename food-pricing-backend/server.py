@@ -14,7 +14,6 @@ from camera import BaseCamera
 app = Flask(__name__)
 CORS(app)
 
-path = '/home/pi/backend/food-pricing-backend/data/*.jpg'
 jpg = '.jpg'
 imgpath = "/home/pi/backend/food-pricing-backend/"
 
@@ -51,13 +50,14 @@ def predictRoute():
         camera.capture('%s%s%s' %(imgpath,id,jpg) ) 
     prediction = predict('%s%s%s' %(imgpath,id,jpg))
     storage.child("/predictions/%s%s" %(id,jpg)).put("%s%s%s" %(imgpath, id, jpg))
+    url = id + jpg
 
     #picture_image = glob.glob(path)
-    #os.remove("/home/pi/backend/food-pricing-backend/data/%s%s" %(id,jpg) )
+    os.remove("%s%s%s" %(imgpath, id, jpg))
     val = hx.get_weight(5)
 
     label = prediction
-    data = json.dumps({"id": id, "label": label, "weight": "10", "price": "20", "iscorrect": "false", "weight":val })
+    data = json.dumps({"id": id, "label": label, "imageURL": url, "weight": "10", "price": "20", "iscorrect": "false", "weight":val })
     print(data)
     return data
 

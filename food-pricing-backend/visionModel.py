@@ -4,17 +4,17 @@ import os
 from tensorflow.keras.models import Model, Sequential
 from tensorflow.keras.layers import Dropout, Dense, GlobalAveragePooling2D
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
-from netty import EfficientNetB3 as Net
+from netty import EfficientNetB0 as Net
 model_effinet = Net(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
 model = Sequential()
 model.add(model_effinet)
 model.add(GlobalAveragePooling2D())
 model.add(Dropout(0.35))
 model.add(Dense(100, activation='relu'))
-model.add(Dense(11, activation='softmax'))
-model.load_weights("weights_food_model")
-categories = ['Bread','Dairy product','Dessert','Egg','Fried food','Meat',
-           'Noodles/Pasta','Rice','Seafood', 'Soup', 'Vegetable/Fruit']
+model.add(Dense(100, activation='relu'))
+model.add(Dense(5, activation='softmax'))
+model.load_weights("model")
+categories = ['Jam Sandwich','Yoghurt','Banana','Lemon','Cookies']
 
 path = '/home/pi/backend/food-pricing-backend/picture.jfif'
 sample_image = os.listdir()[0] #is the bread photo, this should be connected to the taken picture
