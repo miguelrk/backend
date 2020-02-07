@@ -90,7 +90,7 @@ class BaseCamera(object):
             time.sleep(2)
 
             stream = io.BytesIO()
-            for _ in camera.capture_continuous(stream, 'jpeg', resize=(300, 400),
+            for _ in camera.capture_continuous(stream, 'jpeg', resize=(300, 200),
                                                  use_video_port=True):
                 # return current frame
                 stream.seek(0)
@@ -111,9 +111,10 @@ class BaseCamera(object):
             time.sleep(0)
 
             # if there hasn't been any clients asking for frames in
-            # the last 10 seconds then stop the thread
-            if time.time() - BaseCamera.last_access > 2:
+            # the last 3 seconds then stop the thread
+            if time.time() - BaseCamera.last_access > 3:
                 frames_iterator.close()
                 print('Stopping camera thread due to inactivity.')
                 break
         BaseCamera.thread = None
+

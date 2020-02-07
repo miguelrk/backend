@@ -18,7 +18,6 @@ path = '/home/pi/backend/food-pricing-backend/data/*.jpg'
 jpg = '.jpg'
 imgpath = "/home/pi/backend/food-pricing-backend/"
 
-"""
 EMULATE_HX711=False
 referenceUnit = 1
 if not EMULATE_HX711:
@@ -37,7 +36,7 @@ hx.set_reading_format("MSB", "MSB")
 hx.set_reference_unit(referenceUnit)
 hx.reset()
 hx.tare()
-"""
+
 @app.route('/')
 def mainRoute():
     return 'Hello!'
@@ -77,6 +76,6 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', threaded=False)
+    app.run(debug=True, host='0.0.0.0', threaded=True)
 
 
