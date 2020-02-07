@@ -32,7 +32,8 @@ def cleanAndExit():
 hx = HX711(5, 6)
 hx.set_reading_format("MSB", "MSB")
 
-#change the callibration 
+#change the callibration and check it each time if it's correct or not
+#How to is written in example.py
 hx.set_reference_unit(referenceUnit)
 hx.reset()
 hx.tare()
@@ -41,7 +42,7 @@ hx.tare()
 def mainRoute():
     return 'Hello!'
 
-@app.route('/predict', methods=['GET']) # you can delete methods=['GET'] if this line return an error
+@app.route('/predict', methods=['GET'])
 def predictRoute():
     id = str(uuid.uuid4())
     with picamera.PiCamera() as camera:
