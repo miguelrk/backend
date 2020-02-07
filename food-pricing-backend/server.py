@@ -2,7 +2,6 @@ from flask_cors import CORS
 import picamera
 import time
 import uuid
-#import glob
 import numpy as np
 import os
 import json
@@ -32,6 +31,8 @@ def cleanAndExit():
     sys.exit()
 hx = HX711(5, 6)
 hx.set_reading_format("MSB", "MSB")
+
+#change the callibration 
 hx.set_reference_unit(referenceUnit)
 hx.reset()
 hx.tare()
