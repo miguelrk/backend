@@ -32,9 +32,11 @@ def cleanAndExit():
 hx = HX711(5, 6)
 hx.set_reading_format("MSB", "MSB")
 
-#change the callibration and check it each time if it's correct or not
-#How to is written in example.py
+#change the callibration each time due to hard-ware issues. the wires in the hardware are not good
+#See example.py for setting callibration rate
 hx.set_reference_unit(referenceUnit)
+#hx.set_reference_unit(114)
+
 hx.reset()
 hx.tare()
 
