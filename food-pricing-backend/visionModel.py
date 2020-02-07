@@ -16,7 +16,7 @@ model.add(Dense(5, activation='softmax'))
 model.load_weights("model")
 categories = ['Jam Sandwich','Yoghurt','Banana','Lemon','Cookies']
 
-path = '/home/pi/backend/food-pricing-backend/picture.jfif'
+path = '/home/pi/backend/food-pricing-backend/picture.jfif' #this is for testing.
 sample_image = os.listdir()[0] #is the bread photo, this should be connected to the taken picture
 
 def create_features(imagePath):
